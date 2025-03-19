@@ -426,6 +426,11 @@ final class CodocUtil {
 
       $_CODOC->util->check_login($mode); // cookie / strict
 
+      $response = $_CODOC->util->check_login('strict_with_data');
+      if ($response->status and $response->user) {
+          echo $reponse->user->code;
+      }
+
      */
     function check_login($mode = 'cookie') {
         if ($codocTokenCode = $this->get_paywall_token_code()) {
@@ -433,11 +438,15 @@ final class CodocUtil {
                 // cookieの中にtokenがあればOK
                 return true;
             }
-            if ($mode == 'strict') {
+            if ($mode == 'strict' or $mode == 'strict_with_data') {
                 // ログイン状態を問い合わせ
                 $res =  $this->callPaywallAPI('GET','/users',["paywall_token_code" => $codocTokenCode ]);
                 if ($res->status) {
-                    return true;
+                    if ($mode == 'strict_with_data') {
+                        return $res;
+                    } else {
+                        return true;
+                    }
                 } else {
                     return false;
                 }
