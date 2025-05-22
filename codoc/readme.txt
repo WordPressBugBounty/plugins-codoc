@@ -3,8 +3,8 @@ Contributors: codoc
 Donate link: https://codoc.jp
 Tags: codoc, paywall, editor, subscription
 Requires at least: 4.6
-Tested up to: 6.7.2
-Stable tag: 0.9.54
+Tested up to: 6.8.1
+Stable tag: 0.9.54.1
 Requires PHP: 5.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html

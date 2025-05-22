@@ -5,7 +5,7 @@ Plugin URI:  https://plugins.svn.wordpress.org/codoc/
 Description: A WordPress plugin for monetizing websites by enabling paid articles, subscriptions(memberships), and tipping.
 Author:      codoc.jp
 Author URI:  https://codoc.jp
-Version:     0.9.54
+Version:     0.9.54.1
 License:     GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: codoc
@@ -13,7 +13,7 @@ Text Domain: codoc
 
 defined( 'ABSPATH' ) || exit;
 
-const CODOC_PLUGIN_VERSION        = '0.9.54';
+const CODOC_PLUGIN_VERSION        = '0.9.54.1';
 const CODOC_URL                   = 'https://codoc.jp';
 const CODOC_USERCODE_OPTION_NAME  = 'codoc_usercode';
 const CODOC_AUTHINFO_OPTION_NAME  = 'codoc_authinfo';//認証時データ

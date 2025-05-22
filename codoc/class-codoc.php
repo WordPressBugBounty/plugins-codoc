@@ -668,8 +668,8 @@ final class Codoc {
                                                    wp_create_nonce('fetch_token_nonce'),
                                                    esc_attr($_GET['fetch_token_key']),
                                                    esc_attr($_GET['usercode']));
-                            echo (esc_html(__('認証情報を取得しました。設定を完了させるために確認ボタンを押下してください。','codoc')) . '<br />');
-                            echo sprintf('<input type="button" class="button button-primary" value="%s" onClick="%s">　',esc_html(__('認証を確認','codoc')),esc_attr($confirm_url));
+                            echo (esc_html(__('The authentication information has been obtained. Please click the confirmation button to complete the setup.','codoc')) . '<br />');
+                            echo sprintf('<input type="button" class="button button-primary" value="%s" onClick="%s">　',esc_html(__('Confirm authentication','codoc')),esc_attr($confirm_url));
                         } else {
                             
                             echo (esc_html(__('Authentication is required to use codoc on WordPress.','codoc')) . '<br />');

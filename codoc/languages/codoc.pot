@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: codoc\n"
-"POT-Creation-Date: 2024-07-22 15:18+0900\n"
+"POT-Creation-Date: 2025-05-22 12:24+0900\n"
 "PO-Revision-Date: 2023-04-30 17:49+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: codoc.php\n"
@@ -22,227 +22,225 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
 "X-Poedit-SearchPathExcluded-1: node_modules\n"
 
-#: class-codoc.php:318
+#: class-codoc.php:320
 msgid "codoc Settings"
 msgstr ""
 
-#: class-codoc.php:344
+#: class-codoc.php:346
 msgid "Theme"
 msgstr ""
 
-#: class-codoc.php:347
+#: class-codoc.php:349
 msgid ""
 "You can change the design of the paywall by specifying a theme.<br />You "
 "can also specify CSS directly by selecting \"Path Specification\""
 msgstr ""
 
-#: class-codoc.php:374
+#: class-codoc.php:376
 msgid "Rainbow colors"
 msgstr ""
 
-#: class-codoc.php:377
+#: class-codoc.php:379
 msgid "Blue"
 msgstr ""
 
-#: class-codoc.php:380
+#: class-codoc.php:382
 msgid "Red"
 msgstr ""
 
-#: class-codoc.php:383
+#: class-codoc.php:385
 msgid "Green"
 msgstr ""
 
-#: class-codoc.php:386
+#: class-codoc.php:388
 msgid "Black"
 msgstr ""
 
-#: class-codoc.php:389
+#: class-codoc.php:391
 msgid "Dark mode"
 msgstr ""
 
-#: class-codoc.php:392
+#: class-codoc.php:394
 msgid "Rainbow Colors / Square design"
 msgstr ""
 
-#: class-codoc.php:395
+#: class-codoc.php:397
 msgid "Blue / Square design"
 msgstr ""
 
-#: class-codoc.php:398
+#: class-codoc.php:400
 msgid "Red / Square design"
 msgstr ""
 
-#: class-codoc.php:401
+#: class-codoc.php:403
 msgid "Green / Square design"
 msgstr ""
 
-#: class-codoc.php:404
+#: class-codoc.php:406
 msgid "Black / Square design"
 msgstr ""
 
-#: class-codoc.php:407
+#: class-codoc.php:409
 msgid "Dark mode / Square design"
 msgstr ""
 
-#: class-codoc.php:410
+#: class-codoc.php:412
 msgid "Path Specification"
 msgstr ""
 
-#: class-codoc.php:413
+#: class-codoc.php:415
 msgid ""
 "Please note that the theme for dark mode has white text color, and "
 "depending on the background color, the text may not be visible."
 msgstr ""
 
-#: class-codoc.php:420
+#: class-codoc.php:422
 msgid "Texts in paywall"
 msgstr ""
 
-#: class-codoc.php:424
+#: class-codoc.php:426
 msgid "You can change, show and hide texts in your paywall."
 msgstr ""
 
-#: class-codoc.php:426
+#: class-codoc.php:428
 msgid "Display of likes"
 msgstr ""
 
-#: class-codoc.php:427 class-codoc.php:436 class-codoc.php:528
-#: class-codoc.php:553 class-codoc.php:566 dist/blocks.build.js:1
-#: src/block/block.js:91
+#: class-codoc.php:429 class-codoc.php:438 class-codoc.php:530
+#: class-codoc.php:555 class-codoc.php:568 src/block/block.js:93
 msgid "Enable"
 msgstr ""
 
-#: class-codoc.php:428 class-codoc.php:437 class-codoc.php:529
-#: class-codoc.php:554 class-codoc.php:567 dist/blocks.build.js:1
-#: src/block/block.js:92
+#: class-codoc.php:430 class-codoc.php:439 class-codoc.php:531
+#: class-codoc.php:556 class-codoc.php:569 src/block/block.js:94
 msgid "Disable"
 msgstr ""
 
-#: class-codoc.php:431
+#: class-codoc.php:433
 msgid "Display of PoweredBy"
 msgstr ""
 
-#: class-codoc.php:439
+#: class-codoc.php:441
 msgid "Only PRO accounts can be disabled."
 msgstr ""
 
-#: class-codoc.php:443
+#: class-codoc.php:445
 msgid "\"Purchase Article\" button text"
 msgstr ""
 
-#: class-codoc.php:447
+#: class-codoc.php:449
 msgid "\"Purchase Subscription\" button text."
 msgstr ""
 
-#: class-codoc.php:451
+#: class-codoc.php:453
 msgid "Support button text"
 msgstr ""
 
-#: class-codoc.php:455
+#: class-codoc.php:457
 msgid "Text for \"Articles Included in Subscription\"."
 msgstr ""
 
-#: class-codoc.php:459
+#: class-codoc.php:461
 msgid "Text for support description"
 msgstr ""
 
-#: class-codoc.php:471
+#: class-codoc.php:473
 msgid "Attributes for codoc tag"
 msgstr ""
 
-#: class-codoc.php:474
+#: class-codoc.php:476
 msgid "You can add specific attributes to codoc tags."
 msgstr ""
 
-#: class-codoc.php:482
+#: class-codoc.php:484
 msgid "Attributes for codoc script tag"
 msgstr ""
 
-#: class-codoc.php:485
+#: class-codoc.php:487
 msgid "You can add specific attributes to codoc script tags."
 msgstr ""
 
-#: class-codoc.php:493
+#: class-codoc.php:495
 msgid "Permalink"
 msgstr ""
 
-#: class-codoc.php:496
+#: class-codoc.php:498
 msgid "You can replace the part of permalink registered on the codoc."
 msgstr ""
 
-#: class-codoc.php:508
+#: class-codoc.php:510
 msgid "HTML insertion"
 msgstr ""
 
-#: class-codoc.php:511
+#: class-codoc.php:513
 msgid "You can insert HTML before and after the codoc tag."
 msgstr ""
 
-#: class-codoc.php:512
+#: class-codoc.php:514
 msgid "Before HTML"
 msgstr ""
 
-#: class-codoc.php:513
+#: class-codoc.php:515
 msgid "After HTML"
 msgstr ""
 
-#: class-codoc.php:522
+#: class-codoc.php:524
 msgid "Automatic support insertion"
 msgstr ""
 
-#: class-codoc.php:525
+#: class-codoc.php:527
 msgid ""
 "It adds support functions to the post without inserting a codoc block."
 msgstr ""
 
-#: class-codoc.php:527
+#: class-codoc.php:529
 msgid "Automatic insertion"
 msgstr ""
 
-#: class-codoc.php:531
+#: class-codoc.php:533
 msgid "Position"
 msgstr ""
 
-#: class-codoc.php:532
+#: class-codoc.php:534
 msgid "TOP"
 msgstr ""
 
-#: class-codoc.php:533
+#: class-codoc.php:535
 msgid "Bottom"
 msgstr ""
 
-#: class-codoc.php:535
+#: class-codoc.php:537
 msgid "Description"
 msgstr ""
 
-#: class-codoc.php:536
+#: class-codoc.php:538
 msgid "You can customize the description of the support."
 msgstr ""
 
-#: class-codoc.php:538
+#: class-codoc.php:540
 msgid "Category names"
 msgstr ""
 
-#: class-codoc.php:539
+#: class-codoc.php:541
 msgid "Inserted into articles of categories, divided by &quot;|&quot;"
 msgstr ""
 
-#: class-codoc.php:549
+#: class-codoc.php:551
 msgid "Disable plugin filter"
 msgstr ""
 
-#: class-codoc.php:552
+#: class-codoc.php:554
 msgid ""
 "You can disable filter processing that includes shortcodes from other "
 "plugins that interfere with the operation of codoc. Please use this only "
 "if codoc is not functioning properly."
 msgstr ""
 
-#: class-codoc.php:562
+#: class-codoc.php:564
 msgid "Shortcode evacuation"
 msgstr ""
 
-#: class-codoc.php:565
+#: class-codoc.php:567
 msgid ""
 "The execution results of shortcodes written in the paid part are moved to "
 "the free part, and are used and displayed on the HTML during viewing of "
@@ -251,119 +249,119 @@ msgid ""
 "the paid part will be written in the source code."
 msgstr ""
 
-#: class-codoc.php:575
+#: class-codoc.php:577
 msgid "Debug Parameters"
 msgstr ""
 
-#: class-codoc.php:578
+#: class-codoc.php:580
 msgid ""
 "You can specify parameters for debugging. Please use this only upon "
 "request from codoc support."
 msgstr ""
 
-#: class-codoc.php:587
+#: class-codoc.php:589
 msgid "Creator's Information"
 msgstr ""
 
-#: class-codoc.php:593
+#: class-codoc.php:595
 msgid "Please save changes to update the information."
 msgstr ""
 
-#: class-codoc.php:600
+#: class-codoc.php:602
 #, php-format
 msgid "Extensions integration completed (Extensions code: %1$s) %2$s"
 msgstr ""
 
-#: class-codoc.php:602
+#: class-codoc.php:604
 msgid "Set the audience as a private account."
 msgstr ""
 
-#: class-codoc.php:604
+#: class-codoc.php:606
 msgid "Update creator's Information"
 msgstr ""
 
-#: class-codoc.php:605
+#: class-codoc.php:607
 msgid ""
 "Please update each time if you change the logo or cover image on the codoc "
 "side."
 msgstr ""
 
-#: class-codoc.php:621
+#: class-codoc.php:623
 msgid "codoc authentication has been completed."
 msgstr ""
 
-#: class-codoc.php:626 class-codoc.php:650
+#: class-codoc.php:628 class-codoc.php:652
 msgid "Authentication"
 msgstr ""
 
-#: class-codoc.php:631
+#: class-codoc.php:633
 msgid "Please save changes to complete the unbinding."
 msgstr ""
 
-#: class-codoc.php:634
+#: class-codoc.php:636
 #, php-format
 msgid "Authorized as %s"
 msgstr ""
 
-#: class-codoc.php:638
+#: class-codoc.php:640
 msgid "Unbind authorization"
 msgstr ""
 
-#: class-codoc.php:669
+#: class-codoc.php:671
 msgid ""
-"認証情報を取得しました。設定を完了させるために確認ボタンを押下してくださ"
-"い。"
+"The authentication information has been obtained. Please click the "
+"confirmation button to complete the setup."
 msgstr ""
 
-#: class-codoc.php:670
-msgid "認証を確認"
+#: class-codoc.php:672
+msgid "Confirm authentication"
 msgstr ""
 
-#: class-codoc.php:673
+#: class-codoc.php:675
 msgid "Authentication is required to use codoc on WordPress."
 msgstr ""
 
-#: class-codoc.php:674
+#: class-codoc.php:676
 msgid ""
 "You can authenticate by directly entering the user code and API token, or "
 "by logging in and registering with codoc."
 msgstr ""
 
-#: class-codoc.php:675
+#: class-codoc.php:677
 msgid "Authenticate by direct input"
 msgstr ""
 
-#: class-codoc.php:676
+#: class-codoc.php:678
 msgid "Login and authenticate"
 msgstr ""
 
-#: class-codoc.php:676
+#: class-codoc.php:678
 msgid "Register and authenticate"
 msgstr ""
 
-#: class-codoc.php:1088
+#: class-codoc.php:1095
 #, php-format
 msgid ""
 "Please enable %s and enable &quot;Keep paragraph tags in the Classic block "
 "and the Classic Editor&quot; on the settings screen."
 msgstr ""
 
-#: class-codoc.php:1090
+#: class-codoc.php:1097
 #, php-format
 msgid ""
 "Please enable &quot;Keep paragraph tags in the Classic block and the "
 "Classic Editor&quot; on the %s settings screen."
 msgstr ""
 
-#: dist/blocks.build.js:1 src/block/block.js:96
+#: src/block/block.js:98
 msgid "Accept"
 msgstr ""
 
-#: dist/blocks.build.js:1 src/block/block.js:97
+#: src/block/block.js:99
 msgid "Do not accept"
 msgstr ""
 
-#: dist/blocks.build.js:1 src/block/block.js:101
+#: src/block/block.js:103
 msgid ""
 "The paid part will be hidden upon access, but will be displayed after "
 "tapping \"Pay to Read\". Viewers can freely specify the amount to purchase "
@@ -371,98 +369,94 @@ msgid ""
 "purchased."
 msgstr ""
 
-#: dist/blocks.build.js:1 src/block/block.js:102
+#: src/block/block.js:104
 msgid " "
 msgstr ""
 
-#: dist/blocks.build.js:1 src/block/block.js:106 src/block/block.js:257
+#: src/block/block.js:108 src/block/block.js:258
 msgid "Unlisted"
 msgstr ""
 
-#: dist/blocks.build.js:1 src/block/block.js:107
+#: src/block/block.js:109
 msgid "Published"
 msgstr ""
 
-#: dist/blocks.build.js:1 src/block/block.js:176
+#: src/block/block.js:178
 msgid "individual sale"
 msgstr ""
 
-#: dist/blocks.build.js:1 src/block/block.js:186
+#: src/block/block.js:187
 msgid "price"
 msgstr ""
 
-#: dist/blocks.build.js:1 src/block/block.js:186
-msgid "yen"
-msgstr ""
-
-#: dist/blocks.build.js:1 src/block/block.js:186
+#: src/block/block.js:187
 msgid "Displayed as the your suggested price"
 msgstr ""
 
-#: dist/blocks.build.js:1 src/block/block.js:186
+#: src/block/block.js:187
 msgid "【"
 msgstr ""
 
-#: dist/blocks.build.js:1 src/block/block.js:198
+#: src/block/block.js:199
 msgid "Pay-what-you-want"
 msgstr ""
 
-#: dist/blocks.build.js:1 src/block/block.js:206
+#: src/block/block.js:207
 msgid "Limited quantity sale"
 msgstr ""
 
-#: dist/blocks.build.js:1 src/block/block.js:213
+#: src/block/block.js:214
 msgid "Limited quantity"
 msgstr ""
 
-#: dist/blocks.build.js:1 src/block/block.js:226
+#: src/block/block.js:227
 msgid "Affiliate"
 msgstr ""
 
-#: dist/blocks.build.js:1 src/block/block.js:233
+#: src/block/block.js:234
 msgid "Rate"
 msgstr ""
 
-#: dist/blocks.build.js:1 src/block/block.js:234
+#: src/block/block.js:235
 msgid "You can offer affiliate marketing at a specified rate for purchasers."
 msgstr ""
 
-#: dist/blocks.build.js:1 src/block/block.js:247
+#: src/block/block.js:248
 msgid "Tipping"
 msgstr ""
 
-#: dist/blocks.build.js:1 src/block/block.js:267
+#: src/block/block.js:268
 msgid "Subscriptions"
 msgstr ""
 
-#: dist/blocks.build.js:1 src/block/block.js:273
+#: src/block/block.js:274
 msgid "Add"
 msgstr ""
 
-#: dist/blocks.build.js:1 src/block/block.js:305
+#: src/block/block.js:306
 msgid "To continue reading, ..."
 msgstr ""
 
 #. Plugin Name of the plugin/theme
-#: dist/blocks.build.js:1 src/block/block.js:357
+#: src/block/block.js:358
 msgid "codoc"
 msgstr ""
 
-#: dist/blocks.build.js:1 src/block/block.js:358
+#: src/block/block.js:359
 msgid ""
 "The area from this block down is a paid area that only authenticated codoc "
 "users can view."
 msgstr ""
 
-#: dist/blocks.build.js:1 src/block/block.js:368
+#: src/block/block.js:369
 msgid "codoc Block"
 msgstr ""
 
-#: dist/blocks.build.js:1 src/block/block.js:369
+#: src/block/block.js:370
 msgid "plugin for codoc"
 msgstr ""
 
-#: dist/blocks.build.js:1 src/block/block.js:370
+#: src/block/block.js:371
 msgid "codoc-block"
 msgstr ""
 
