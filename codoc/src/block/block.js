@@ -136,23 +136,41 @@ class CodocControls extends Component {
         const toggleShowSupport = () => setAttributes( { showSupport: ! showSupport } );
 
         const SubscriptionCheckBoxes = withState({
-            checked_obj: Object.assign(new Object, subscriptions)
-        })( ( { checked_obj , setState } ) => (
+            checked_obj: Object.assign({}, subscriptions)
+        })( ({ checked_obj, setState }) => (
             <ul>
             {
-                this.subscriptionsFetched.map((v) => (
-                    <li><CheckboxControl
-                    className="check_items"
-                    label={v.label}
-                    checked={checked_obj[v.value]}
-
-                    onChange={ ( check ) => {
-                        check ? checked_obj[v.value] = true : delete checked_obj[v.value]
-                        setAttributes({subscriptions : checked_obj})
-                        setState({checked_obj})
-                    } }
-                    /></li>
-                ) )
+                this.subscriptionsFetched.map((v) => {
+                    const isChecked = !!checked_obj[v.value];
+                    const checkedCount = Object.keys(checked_obj).length;
+                    
+                    return (
+                        <li key={v.value}>
+                        <CheckboxControl
+                        className="check_items"
+                        label={v.label}
+                        checked={isChecked}
+                        onChange={(check) => {
+                            // 追加する場合、5個以上は無効
+                            if (check && checkedCount >= 5) {
+                                return; // これ以上チェックできない
+                            }
+                            
+                            const newChecked = { ...checked_obj };
+                            
+                            if (check) {
+                                newChecked[v.value] = true;
+                            } else {
+                                delete newChecked[v.value];
+                            }
+                            
+                            setAttributes({ subscriptions: newChecked });
+                            setState({ checked_obj: newChecked });
+                        }}
+                        />
+                        </li>
+                    );
+                })
             }
             </ul>
         ) )

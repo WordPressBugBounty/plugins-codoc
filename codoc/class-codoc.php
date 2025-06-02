@@ -601,7 +601,7 @@ final class Codoc {
                             // Translators: %s is the integration code, and %s is additional information based on the registration mode.
                             echo sprintf('<p>' .  esc_html(__('Extensions integration completed (Extensions code: %1$s) %2$s','codoc')) . '</p>',
                                          esc_html($connect_code),
-                                         esc_html($CODOC_SETTINGS['codoc_connect_registration_mode'] == 'dedicated' ? '<br/> <strong>' . __('Set the audience as a private account.','codoc') . '</strong>' : ''));
+                                         esc_html($CODOC_SETTINGS['codoc_connect_registration_mode'] == 'dedicated' ?   __('Set the audience as a private account.','codoc') : ''));
                         }
                         echo sprintf('<p><a href="javascript:void(0);" onClick="' . esc_attr($script) . '">' . esc_html(__('Update creator\'s Information','codoc')) . '</a></p>');
                         echo ('<p>' . esc_html(__('Please update each time if you change the logo or cover image on the codoc side.','codoc')) . '</p>');
