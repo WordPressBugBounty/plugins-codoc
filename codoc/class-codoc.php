@@ -168,7 +168,7 @@ final class Codoc {
         global $CODOC_SETTINGS;
         add_action( 'admin_menu' ,function(){
             add_options_page(
-                'codoc の設定',        //ページタイトル
+                __('codoc Settings','codoc'),        //ページタイトル
                 'codoc',           //設定メニューに表示されるメニュータイトル
                 'edit_users',      //権限
                 'codoc',           //設定ページのURL。options-general.php?page=codoc
@@ -769,7 +769,7 @@ final class Codoc {
         // プラグイン一覧に設定のリンクをいれる
         add_filter( 'plugin_action_links_' . plugin_basename( plugin_dir_path( __FILE__ ) . 'codoc' . '.php' ),
                     function( $links ) {
-                        $setting_link = sprintf( '<a href="%s">%s</a>', esc_url( add_query_arg( 'page', 'codoc', admin_url( 'options-general.php' ) ) ), esc_html( '設定' ) );
+                        $setting_link = sprintf( '<a href="%s">%s</a>', esc_url( add_query_arg( 'page', 'codoc', admin_url( 'options-general.php' ) ) ), esc_html( __('Settings') ) );
                         array_unshift( $links, $setting_link );
 
                         return $links;
