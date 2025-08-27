@@ -4,7 +4,7 @@ Donate link: https://codoc.jp
 Tags: codoc, paywall, editor, subscription
 Requires at least: 4.6
 Tested up to: 6.8.2
-Stable tag: 0.9.54.3
+Stable tag: 0.9.55
 Requires PHP: 5.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -24,7 +24,7 @@ Additionally, all the necessary features for content sales, such as revenue mana
 
 == Installation ==
 
-1. Search for the "codoc" plugin from "Plugins → Add New" in your WordPress dashboard.
+1. Search for the "codoc" plugin from "Plugins → Add Plugin" in your WordPress dashboard.
 
 2. Install and activate the codoc plugin.
 

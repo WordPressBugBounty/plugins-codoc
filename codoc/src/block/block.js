@@ -283,7 +283,7 @@ class CodocControls extends Component {
                 
           <div class="codoc-subscription-title">
             <label>
-            { __('Subscriptions','codoc') }
+            { __('Reader Plans','codoc') }
             </label>
             <a
             href={ CODOC_URL + '/me/subscriptions'}

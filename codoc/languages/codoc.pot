@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: codoc\n"
-"POT-Creation-Date: 2025-05-22 12:24+0900\n"
+"POT-Creation-Date: 2025-08-27 15:01+0900\n"
 "PO-Revision-Date: 2023-04-30 17:49+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -22,7 +22,7 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
 "X-Poedit-SearchPathExcluded-1: node_modules\n"
 
-#: class-codoc.php:320
+#: class-codoc.php:171 class-codoc.php:320
 msgid "codoc Settings"
 msgstr ""
 
@@ -339,6 +339,10 @@ msgstr ""
 msgid "Register and authenticate"
 msgstr ""
 
+#: class-codoc.php:772
+msgid "Settings"
+msgstr ""
+
 #: class-codoc.php:1095
 #, php-format
 msgid ""
@@ -373,7 +377,7 @@ msgstr ""
 msgid " "
 msgstr ""
 
-#: src/block/block.js:108 src/block/block.js:258
+#: src/block/block.js:108 src/block/block.js:276
 msgid "Unlisted"
 msgstr ""
 
@@ -381,82 +385,82 @@ msgstr ""
 msgid "Published"
 msgstr ""
 
-#: src/block/block.js:178
+#: src/block/block.js:196
 msgid "individual sale"
 msgstr ""
 
-#: src/block/block.js:187
+#: src/block/block.js:205
 msgid "price"
 msgstr ""
 
-#: src/block/block.js:187
+#: src/block/block.js:205
 msgid "Displayed as the your suggested price"
 msgstr ""
 
-#: src/block/block.js:187
+#: src/block/block.js:205
 msgid "【"
 msgstr ""
 
-#: src/block/block.js:199
+#: src/block/block.js:217
 msgid "Pay-what-you-want"
 msgstr ""
 
-#: src/block/block.js:207
+#: src/block/block.js:225
 msgid "Limited quantity sale"
 msgstr ""
 
-#: src/block/block.js:214
+#: src/block/block.js:232
 msgid "Limited quantity"
 msgstr ""
 
-#: src/block/block.js:227
+#: src/block/block.js:245
 msgid "Affiliate"
 msgstr ""
 
-#: src/block/block.js:234
+#: src/block/block.js:252
 msgid "Rate"
 msgstr ""
 
-#: src/block/block.js:235
+#: src/block/block.js:253
 msgid "You can offer affiliate marketing at a specified rate for purchasers."
 msgstr ""
 
-#: src/block/block.js:248
+#: src/block/block.js:266
 msgid "Tipping"
 msgstr ""
 
-#: src/block/block.js:268
-msgid "Subscriptions"
+#: src/block/block.js:286
+msgid "Reader Plans"
 msgstr ""
 
-#: src/block/block.js:274
+#: src/block/block.js:292
 msgid "Add"
 msgstr ""
 
-#: src/block/block.js:306
+#: src/block/block.js:324
 msgid "To continue reading, ..."
 msgstr ""
 
 #. Plugin Name of the plugin/theme
-#: src/block/block.js:358
+#: src/block/block.js:376
 msgid "codoc"
 msgstr ""
 
-#: src/block/block.js:359
+#: src/block/block.js:377
 msgid ""
 "The area from this block down is a paid area that only authenticated codoc "
 "users can view."
 msgstr ""
 
-#: src/block/block.js:369
+#: src/block/block.js:387
 msgid "codoc Block"
 msgstr ""
 
-#: src/block/block.js:370
+#: src/block/block.js:388
 msgid "plugin for codoc"
 msgstr ""
 
-#: src/block/block.js:371
+#: src/block/block.js:389
 msgid "codoc-block"
 msgstr ""
 
