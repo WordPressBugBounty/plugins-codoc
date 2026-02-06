@@ -26,6 +26,7 @@ const {
   ToggleControl,
   CheckboxControl,
   RangeControl,
+  TextControl,
 } = wp.components;
 
 const {
@@ -50,10 +51,16 @@ class CodocControls extends Component {
     constructor( props ) {
         super( ...arguments );
         this.subscriptionsFetched = [];
+        this.subscriptionSearchTerm = '';
+        this.state = {
+            searchTerm: '',
+            filteredSubscriptions: []
+        };
         this.fetchSubscriptions();
+        this.handleSearchChange = this.handleSearchChange.bind(this);
     }
 
-    fetchSubscriptions() {
+    fetchSubscriptions(searchTitle = '') {
         const {
             setAttributes,
             attributes: {
@@ -68,6 +75,11 @@ class CodocControls extends Component {
         setAttributes( { fetching: true } )
         let url = CODOC_URL + '/api/v1/cms/' + CODOC_USER_CODE + '/subscriptions?without_token=1';
 
+        // Add title parameter if search term exists
+        if (searchTitle) {
+            url += '&title=' + encodeURIComponent(searchTitle);
+        }
+
         fetch(url)
             .then( res => res.json() )
             .then( res => {
@@ -77,15 +89,29 @@ class CodocControls extends Component {
                         let info = {
                             value: res.subscriptions[i].code,
                             label: res.subscriptions[i].title,
+                            term: res.subscriptions[i].term,
+                            price: res.subscriptions[i].price,
+                            currency: res.subscriptions[i].currency
                         }
                         list[i] = info
                     }
                 }
-                if (list.length) {
+                if (list.length || searchTitle) {
                     this.subscriptionsFetched = list;
+                    this.setState({ filteredSubscriptions: list });
                 }
                 setAttributes( { fetching: false } )
             })
+    }
+
+    handleSearchChange(value) {
+        this.setState({ searchTerm: value });
+
+        // Debounce the API call
+        clearTimeout(this.searchTimeout);
+        this.searchTimeout = setTimeout(() => {
+            this.fetchSubscriptions(value);
+        }, 500);
     }
 
 	getShowPriceHelp( checked ) {
@@ -138,12 +164,21 @@ class CodocControls extends Component {
         const SubscriptionCheckBoxes = withState({
             checked_obj: Object.assign({}, subscriptions)
         })( ({ checked_obj, setState }) => (
+            <div>
+            {this.state.filteredSubscriptions.length === 0 ? (
+                <p style={{ fontStyle: 'italic', color: '#666' }}>
+                    { this.state.searchTerm
+                        ? __('No plans found matching your search.','codoc')
+                        : __('No reader plans available.','codoc')
+                    }
+                </p>
+            ) : (
             <ul>
             {
-                this.subscriptionsFetched.map((v) => {
+                this.state.filteredSubscriptions.map((v) => {
                     const isChecked = !!checked_obj[v.value];
                     const checkedCount = Object.keys(checked_obj).length;
-                    
+
                     return (
                         <li key={v.value}>
                         <CheckboxControl
@@ -155,15 +190,15 @@ class CodocControls extends Component {
                             if (check && checkedCount >= 5) {
                                 return; // これ以上チェックできない
                             }
-                            
+
                             const newChecked = { ...checked_obj };
-                            
+
                             if (check) {
                                 newChecked[v.value] = true;
                             } else {
                                 delete newChecked[v.value];
                             }
-                            
+
                             setAttributes({ subscriptions: newChecked });
                             setState({ checked_obj: newChecked });
                         }}
@@ -173,6 +208,8 @@ class CodocControls extends Component {
                 })
             }
             </ul>
+            )}
+            </div>
         ) )
         const affiliateRateOptions = [
             { value: '0.0500', label:'5%' },
@@ -292,6 +329,13 @@ class CodocControls extends Component {
             { __('Add','codoc') }
             </a>
           </div>
+
+            <TextControl
+                label={ __('Search Plans','codoc') }
+                value={ this.state.searchTerm }
+                onChange={ this.handleSearchChange }
+                placeholder={ __('Enter title to search...','codoc') }
+            />
 
             <SubscriptionCheckBoxes />
 

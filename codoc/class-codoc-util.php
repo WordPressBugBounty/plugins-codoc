@@ -51,6 +51,12 @@ final class CodocUtil {
                     'body'    => $body,
                 ]
             );
+            // notification を処理
+            $body = json_decode($response['body'],true);
+            if (isset($body['notification']) && !empty($body['notification'])) {
+                // notification をトランジェントに保存（24時間保持）
+                set_transient('codoc_api_notification', $body['notification'], DAY_IN_SECONDS);
+            }
             if ( is_wp_error($response) || $response['response']['code'] != 200 ) {
                 //何もしない
                 //var_dump( $response );

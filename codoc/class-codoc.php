@@ -49,23 +49,8 @@ final class Codoc {
         if (is_admin() and $auth_info and preg_match('/^post/',$pagenow)) {
             // Gutenberg のサポートがない場合は何もしない
             if ( function_exists( 'register_block_type' ) )  {
-                // WPに登録ブロックとして認識させる（cgbは登録しないっぽい)
-                \WP_Block_Type_Registry::get_instance()->register('codoc/codoc-block');
-                // gutenberg
+                // gutenberg - init.php handles all block registration and script enqueuing
                 require_once 'src/init.php';
-                add_action('wp_loaded', function() {
-                    $auth_info = get_option(CODOC_AUTHINFO_OPTION_NAME);
-                    wp_localize_script('codoc-block-js', 'OPTIONS', array(
-                        'codoc_url'      => $this->get_codoc_url(),
-                        'codoc_usercode' => get_option(CODOC_USERCODE_OPTION_NAME),
-                        'codoc_plugin_version' => CODOC_PLUGIN_VERSION,
-                        'codoc_sdk_path'       => CODOC_SDK_PATH,
-                        'codoc_account_is_pro' => isset($auth_info['account_is_pro']) ? $auth_info['account_is_pro'] : 0,
-                        'codoc_currency_code' => isset($auth_info['currency_code']) ? $auth_info['currency_code'] : 'yen',
-                        'codoc_currency_decimal_places' => isset($auth_info['currency_decimal_places']) ? $auth_info['currency_decimal_places'] : 0,
-                    ));
-                    wp_set_script_translations('codoc-block-js', 'codoc',plugin_dir_path( __FILE__ ) . 'languages');
-                });
             }
             // tinymce
             $this->add_mce();
@@ -187,6 +172,29 @@ final class Codoc {
         function codoc_admin_styles($hook) {
           wp_enqueue_style('codoc-options-style', plugins_url( 'codoc/css/codoc-options.css', __DIR__ ));
         }
+
+        // notification を削除する Ajax 処理
+        add_action('wp_ajax_dismiss_codoc_notification', function() {
+            delete_transient('codoc_api_notification');
+            wp_die();
+        });
+
+        // 管理画面で notification の dismiss を処理する JavaScript
+        add_action('admin_footer', function() {
+            ?>
+            <script type="text/javascript">
+            jQuery(document).ready(function($) {
+                // codoc notification の×ボタンがクリックされたときの処理
+                $(document).on('click', '.codoc-notification .notice-dismiss', function() {
+                    $.post(ajaxurl, {
+                        action: 'dismiss_codoc_notification'
+                    });
+                });
+            });
+            </script>
+            <?php
+        });
+
         add_action( "admin_init", function() {
             global $CODOC_USERCODE;
             global $CODOC_SETTINGS;
@@ -1084,6 +1092,20 @@ final class Codoc {
     }
 
     function show_tadv_notice() {
+        // API からの notification を表示
+        $api_notifications = get_transient('codoc_api_notification');
+        if ($api_notifications && is_array($api_notifications)) {
+            // notification 配列のキーと値を表示
+            foreach ($api_notifications as $key => $value) {
+                // 値が配列やオブジェクトの場合は json_encode で文字列化
+                if (is_array($value) || is_object($value)) {
+                    $value = json_encode($value, JSON_UNESCAPED_UNICODE);
+                }
+                echo "<div class=\"notice notice-warning is-dismissible codoc-notification\"><p>" . esc_html($value) . "</p></div>";
+            }
+            //delete_transient('codoc_api_notification');
+        }
+
         $name = 'Advanced Editor Tools';
         $name_escaped = preg_replace('/ /','+',$name);
         $install_url = network_admin_url( "plugin-install.php?tab=search&s=" . $name );

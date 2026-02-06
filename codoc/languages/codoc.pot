@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: codoc\n"
-"POT-Creation-Date: 2025-08-27 15:01+0900\n"
+"POT-Creation-Date: 2025-10-07 16:17+0900\n"
 "PO-Revision-Date: 2023-04-30 17:49+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -107,12 +107,14 @@ msgid "Display of likes"
 msgstr ""
 
 #: class-codoc.php:429 class-codoc.php:438 class-codoc.php:530
-#: class-codoc.php:555 class-codoc.php:568 src/block/block.js:93
+#: class-codoc.php:555 class-codoc.php:568 dist/blocks.build.js:1
+#: src/block/block.js:119
 msgid "Enable"
 msgstr ""
 
 #: class-codoc.php:430 class-codoc.php:439 class-codoc.php:531
-#: class-codoc.php:556 class-codoc.php:569 src/block/block.js:94
+#: class-codoc.php:556 class-codoc.php:569 dist/blocks.build.js:1
+#: src/block/block.js:120
 msgid "Disable"
 msgstr ""
 
@@ -357,15 +359,15 @@ msgid ""
 "Classic Editor&quot; on the %s settings screen."
 msgstr ""
 
-#: src/block/block.js:98
+#: dist/blocks.build.js:1 src/block/block.js:124
 msgid "Accept"
 msgstr ""
 
-#: src/block/block.js:99
+#: dist/blocks.build.js:1 src/block/block.js:125
 msgid "Do not accept"
 msgstr ""
 
-#: src/block/block.js:103
+#: dist/blocks.build.js:1 src/block/block.js:129
 msgid ""
 "The paid part will be hidden upon access, but will be displayed after "
 "tapping \"Pay to Read\". Viewers can freely specify the amount to purchase "
@@ -373,95 +375,123 @@ msgid ""
 "purchased."
 msgstr ""
 
-#: src/block/block.js:104
+#: dist/blocks.build.js:1 src/block/block.js:130
 msgid " "
 msgstr ""
 
-#: src/block/block.js:108 src/block/block.js:276
+#: dist/blocks.build.js:1 src/block/block.js:134 src/block/block.js:313
 msgid "Unlisted"
 msgstr ""
 
-#: src/block/block.js:109
+#: dist/blocks.build.js:1 src/block/block.js:135
 msgid "Published"
 msgstr ""
 
-#: src/block/block.js:196
+#: dist/blocks.build.js:1 src/block/block.js:171
+msgid "No plans found matching your search."
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "No subscription plans available."
+msgstr ""
+
+#: dist/blocks.build.js:1 src/block/block.js:233
 msgid "individual sale"
 msgstr ""
 
-#: src/block/block.js:205
+#: dist/blocks.build.js:1 src/block/block.js:242
 msgid "price"
 msgstr ""
 
-#: src/block/block.js:205
+#: dist/blocks.build.js:1 src/block/block.js:242
 msgid "Displayed as the your suggested price"
 msgstr ""
 
-#: src/block/block.js:205
+#: dist/blocks.build.js:1 src/block/block.js:242
 msgid "【"
 msgstr ""
 
-#: src/block/block.js:217
+#: dist/blocks.build.js:1 src/block/block.js:254
 msgid "Pay-what-you-want"
 msgstr ""
 
-#: src/block/block.js:225
+#: dist/blocks.build.js:1 src/block/block.js:262
 msgid "Limited quantity sale"
 msgstr ""
 
-#: src/block/block.js:232
+#: dist/blocks.build.js:1 src/block/block.js:269
 msgid "Limited quantity"
 msgstr ""
 
-#: src/block/block.js:245
+#: dist/blocks.build.js:1 src/block/block.js:282
 msgid "Affiliate"
 msgstr ""
 
-#: src/block/block.js:252
+#: dist/blocks.build.js:1 src/block/block.js:289
 msgid "Rate"
 msgstr ""
 
-#: src/block/block.js:253
+#: dist/blocks.build.js:1 src/block/block.js:290
 msgid "You can offer affiliate marketing at a specified rate for purchasers."
 msgstr ""
 
-#: src/block/block.js:266
+#: dist/blocks.build.js:1 src/block/block.js:303
 msgid "Tipping"
 msgstr ""
 
-#: src/block/block.js:286
+#: dist/blocks.build.js:1 src/block/block.js:323
 msgid "Reader Plans"
 msgstr ""
 
-#: src/block/block.js:292
+#: dist/blocks.build.js:1 src/block/block.js:329
 msgid "Add"
 msgstr ""
 
-#: src/block/block.js:324
+#: dist/blocks.build.js:1 src/block/block.js:334
+msgid "Search Plans"
+msgstr ""
+
+#: dist/blocks.build.js:1 src/block/block.js:337
+msgid "Enter title to search..."
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Search for subscription plans by title"
+msgstr ""
+
+#: dist/blocks.build.js:1 src/block/block.js:369
 msgid "To continue reading, ..."
 msgstr ""
 
 #. Plugin Name of the plugin/theme
-#: src/block/block.js:376
+#: dist/blocks.build.js:1 src/block/block.js:421
 msgid "codoc"
 msgstr ""
 
-#: src/block/block.js:377
+#: dist/blocks.build.js:1 src/block/block.js:422
 msgid ""
 "The area from this block down is a paid area that only authenticated codoc "
 "users can view."
 msgstr ""
 
-#: src/block/block.js:387
+#: dist/blocks.build.js:1 src/block/block.js:432
 msgid "codoc Block"
 msgstr ""
 
-#: src/block/block.js:388
+#: dist/blocks.build.js:1 src/block/block.js:433
 msgid "plugin for codoc"
 msgstr ""
 
-#: src/block/block.js:389
+#: dist/blocks.build.js:1 src/block/block.js:434
 msgid "codoc-block"
+msgstr ""
+
+#: src/block/block.js:172
+msgid "No reader plans available."
+msgstr ""
+
+#: src/block/block.js:338
+msgid "Search for reader plans by title"
 msgstr ""
 
 #. Plugin URI of the plugin/theme

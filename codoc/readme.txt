@@ -1,107 +1,159 @@
 === codoc ===
 Contributors: codoc
 Donate link: https://codoc.jp
-Tags: codoc, paywall, editor, subscription
+Tags: paywall, subscription, membership, tipping, content sales
 Requires at least: 4.6
 Tested up to: 6.8.2
-Stable tag: 0.9.55
+Stable tag: 0.9.57.2
 Requires PHP: 5.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-A WordPress plugin for monetizing websites by enabling paid articles, subscriptions(memberships), and tipping.
+A WordPress plugin for monetizing your website with paid articles, Reader Plans, and tipping.
 
 == Description ==
 
-With this plugin, you can quickly implement the sale of paid articles, subscription services, and tipping on your WordPress website.
+[codoc](https://codoc.jp) is a simple and powerful WordPress paywall plugin that enables creators to sell paid articles, offer Reader Plans (Subscription / Membership), and accept tips.
 
-After configuring the plugin, it provides the codoc block※ on the post editor screen for selling articles.
-※The codoc block is compatible with both the Gutenberg block editor and the Classic Editor (TinyMCE).
+Originally built for Japanese creators, codoc is also fully compatible with users in the US/EU.  
+Payment is processed via Stripe, and buyers worldwide can purchase using a valid credit card (currency: JPY/USD/EUR).
 
-The sales mechanism is simple. Blocks (or text) placed below the codoc block in the post content can only be accessed by users who have made a payment (credit card transaction). Conversely, blocks placed above are accessible to all users for free. The codoc block not only displays product information for purchasing articles but also manages authentication for users who have purchased the articles. Pricing, subscription specifications, and other sales conditions can be specified on a per-article basis within the block settings.
+After setup, the plugin adds a codoc block※ to the post editor.  
+※Compatible with both Gutenberg and the Classic Editor (TinyMCE).
 
-Additionally, all the necessary features for content sales, such as revenue management and customer management, are available on the codoc website. Purchase history and subscription management for customers who have made article purchases are also provided on the codoc website.
+### How it works
+Content placed **below** the codoc block becomes the paid section and is hidden from non-buyers.  
+Content placed **above** remains freely available.
+
+The codoc block:
+- displays the purchase interface  
+- handles buyer authentication  
+- allows per-article settings such as price or Reader Plan availability  
+- all revenue/customer management is available on codoc.jp
+
+More details :  
+[codoc for WordPress](https://codoc.jp/lp_wp)
+
+Help center :  
+[FAQ](https://codoc.jp/docs/faq)
+
+== Features ==
+
+- Article paywall  
+- One-time purchases  
+- Reader Plans (Subscription / Membership)
+- Tipping support  
+- Stripe payments (Credit card / Apple Pay / Google Pay / BNPL)  
+- Gutenberg & Classic Editor support  
+- Featured image support  
+- Revenue & customer management via codoc.jp  
+- Insert custom HTML before/after codoc tags  
+- CSS override support  
+- Team/multi-creator support  
+- Safe authentication & Stripe-level fraud prevention
 
 == Installation ==
 
-1. Search for the "codoc" plugin from "Plugins → Add Plugin" in your WordPress dashboard.
+1. Go to **Plugins → Add New** and search for “codoc”.
+2. Install and activate the plugin.
+3. Go to **Settings → codoc** and log in or register for a codoc account.
+4. Continue to the codoc integration page and click **Authenticate**.
+5. Return to the codoc settings page and verify that your account shows "**authenticated**".
 
-2. Install and activate the codoc plugin.
-
-3. Go to "Settings → codoc Settings" and log in or register for a codoc account.
-
-4. Proceed to the codoc blog integration feature and click "Authenticate".
-
-5. Go to the codoc Settings page in WordPress and confirm the display of "your@address authenticated" message.
-
-Once the above settings are complete, you can start using the codoc block by searching for "codoc" in the "Add Block" section of the post editor※.
-※For users of the Classic Editor, a codoc configuration button will be added.
+After setup, search for **codoc** in the block inserter.  
+※Classic Editor users will see a codoc button added to the toolbar.
 
 == FAQ ==
 
-= What are the conditions for creators to sell content using codoc? =
+= What are the requirements for creators to use codoc? =
+Creators must reside in **Japan, the United States, or the EU** and have a bank account in each country.
 
-The current requirement is to have a residence and a bank account within Japan.
+= Can users outside Supported coutry purchase content? =
+Yes. Anyone with a valid credit card can purchase.  
+Transactions are processed in **JPY, USD or EUR** .
 
-= What are the conditions for users to purchase content?
+= Where are article contents stored? =
+All content is stored on **both WordPress and codoc**.
 
-Users who can use a credit card, including those outside of Japan, can make purchases. The currency used is only yen.
+= Will publication status sync to codoc? =
+Yes.  
+If the WordPress article is **published**, it is published on codoc as well.  
+Otherwise, it remains **unpublished**.
 
-= Where are the free and paid parts of the articles stored? =
+= What happens to codoc content if the WordPress article is deleted? =
+It becomes **unpublished** on codoc.
 
-All article content is saved in both WordPress and codoc.
+= How can I preview the article as buyers/non-buyers? =
+- As buyer: Click **"Sign in to restore purchase"** and authenticate with your codoc account.  
+- As non-buyer: Log out and view the article normally.
 
-= Will the publication status be reflected in codoc? =
+= I can see paid content even without purchasing. Why? =
+You are logged in as the **codoc creator**, who authored the article.
 
-Yes, it will be reflected. It will only be published on the codoc side if it is published on the WordPress side. (Otherwise, it will be set as unpublished on codoc.)
+= Can I use the Classic Editor? =
+Yes.  
+After integration, a codoc button is added to the toolbar.
 
-= What happens to the codoc articles if I delete them in WordPress? =
+If TinyMCE Advanced is installed, enable:  
+**"keep paragraph tags in the Classic block and the Classic Editor"**
 
-They will become unpublished.
+= Can I use featured images? =
+Yes.  
+The WordPress featured image is used on codoc.
 
-= How can I see how the article appears to buyers and non-buyers? =
+= Can I customize CSS? =
+Yes.  
+Specify your custom CSS file in **Settings → codoc**.  
+[Base stylesheet](https://codoc.jp/css/paywall.css) 
+※HTML output may change without notice.
 
-The view for buyers will be the same as when they log in with their codoc account by clicking "Already purchased, log in" displayed in the article. (The purchase button will disappear, and they can access the paid area.) The view for non-buyers will be the same as the state before logging in (not logged in). When you log in with an account other than your own, only the login button will not be displayed.
+You can see [sample customized css](https://codoc.jp/me/widgets?mode=theme) on management screen.(sign-in is required)
 
-= I can see the paid area of the article even though I haven't purchased it. Why is that? =
-
-It is because you are logged in as the codoc creator, who is the author of the relevant article being sold on the website.
-
-= Can I use the plugin in the Classic Editor? =
-
-Yes, it is possible. After completing the integration settings, a codoc logo button will be added to the editor toolbar. You can use this button to add codoc blocks and configure article settings such as pricing in the main text. We also recommend enabling the "keep paragraph tags in the Classic block and the Classic Editor" option in the settings of the TinyMCE Advanced plugin that is installed for use.
-
-= Can I specify a featured image? =
-
-The featured image specified in the WordPress post will be used as the codoc featured image.
-
-= Can I customize the CSS? =
-
-You can override the CSS by specifying the custom CSS path in the codoc settings screen. Please import the original CSS file from https://codoc.jp/css/paywall.css and overwrite the relevant parts. Note that the HTML output generated by codoc may be subject to changes without prior notice, so please be aware of that.
 
 = Can I change the permalink registered in codoc? =
+Permalinks are retrieved via `get_permalink()`.  
+If running through reverse proxies or special routing, adjust via codoc’s “Replacement Settings”.
 
-The links are obtained from get_permalink(). If it is different from what is expected, such as when running WordPress under a reverse proxy, you can change it using the replacement settings in the codoc settings screen.
+= “This block contains unexpected or invalid content.” appears =
+Click **“Attempt Block Recovery”** in the block settings menu.
 
-= The codoc block displays "This block contains unexpected or invalid content." =
+= Do script tags work? =
+Yes.  
+External script tags have been supported. (Twitter/Instagram embeds, etc.)
 
-Please perform "Recover Block" from the settings button in the upper right corner of the block.
+= I want to add buttons at the end of the article =
+Blocks added **below** the codoc tag are hidden.  
+Use:  
+**Settings → codoc → Insert HTML before/after codoc tags**
 
-= Does JavaScript code work? =
+= Shortcodes are shown as plain text inside paid areas =
+Add this to the debug settings:
 
-Since April 22, 2020, the specification has been changed to allow script tags for external JavaScript loading to work. This supports embedding blocks for platforms like Twitter and Instagram in Gutenberg.
+  { “the_content_filter_priority”: 1000000 }
 
-= I want to add a button at the end of the article body. =
-
-If you add a block below the codoc tags, it will be hidden. Therefore, if you want to add social sharing buttons or advertisements, etc., please use the "Insert HTML before and after codoc tags" feature in the "Settings → codoc" section, instead of doing it directly on the post editor.
-
-= Shortcodes are being displayed as they are in the paid part. =
-
-In the "Settings → codoc" section, specify the following in the debug parameter. If it doesn't work, increase the number:
-
-{ "the_content_filter_priority": 1000000 }
+Increase the value if needed.
 
 == Screenshots ==
+
+1. Paywall section embedded within a WordPress post.
+
+2. Purchase modal supporting one-time payments, Reader Plans, and tips.
+
+3. Tip / Support screen for voluntary contributions.
+
+4. Reader Plan options with pricing and benefits.
+
+5. Unlocked content after successful purchase
+
+6. Post editor settings to enable content sales and set pricing.
+
+7. Classic editor is also supported.
+
+8. Same settings as Gutenberg editor are possible.
+
+9. Plugin settings page with straightforward codoc and Stripe integration
+
+10. Mobile view of the Paywall and purchase interface.
 
 == Changelog ==
 
