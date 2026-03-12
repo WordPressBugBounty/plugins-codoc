@@ -1,10 +1,10 @@
 === codoc ===
 Contributors: codoc
 Donate link: https://codoc.jp
-Tags: paywall, subscription, membership, tipping, content sales
+Tags: paywall, subscription, membership, tipping, digital downloads
 Requires at least: 4.6
 Tested up to: 6.8.2
-Stable tag: 0.9.57.2
+Stable tag: 0.9.58
 Requires PHP: 5.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -43,13 +43,12 @@ Help center :
 - One-time purchases  
 - Reader Plans (Subscription / Membership)
 - Tipping support  
-- Stripe payments (Credit card / Apple Pay / Google Pay / BNPL)  
+- Stripe payments (Credit card / Apple Pay / Google Pay / Konibini)  
 - Gutenberg & Classic Editor support  
 - Featured image support  
 - Revenue & customer management via codoc.jp  
 - Insert custom HTML before/after codoc tags  
 - CSS override support  
-- Team/multi-creator support  
 - Safe authentication & Stripe-level fraud prevention
 
 == Installation ==

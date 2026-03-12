@@ -323,6 +323,9 @@ final class Codoc {
             if (!isset($CODOC_SETTINGS['debug_params'])) {
                 $CODOC_SETTINGS['debug_params'] = '';
             }
+            if (!isset($CODOC_SETTINGS['block_defaults'])) {
+                $CODOC_SETTINGS['block_defaults'] = '';
+            }
             add_settings_section(
                 'setting_section_id',    // id
                 __('codoc Settings','codoc'),  // title
@@ -347,7 +350,17 @@ final class Codoc {
 
                 register_setting(
                     'codoc_option_group',      // option group
-                    CODOC_SETTINGS_OPTION_NAME // option name(DB)
+                    CODOC_SETTINGS_OPTION_NAME, // option name(DB)
+                    array('sanitize_callback' => function($input) {
+                        if (isset($input['block_defaults']) && $input['block_defaults'] !== '') {
+                            if (json_decode($input['block_defaults'], true) === null && $input['block_defaults'] !== 'null') {
+                                $old = get_option(CODOC_SETTINGS_OPTION_NAME);
+                                $input['block_defaults'] = isset($old['block_defaults']) ? $old['block_defaults'] : '';
+                                add_settings_error('block_defaults', 'invalid_json', esc_html(__('Block Default Values: Invalid JSON format. The value was not saved.','codoc')), 'error');
+                            }
+                        }
+                        return $input;
+                    })
                 );
                 add_settings_field(
                     'css_path',                    // id
@@ -593,6 +606,30 @@ final class Codoc {
                 );
 
                 add_settings_field(
+                    'block_defaults',                   // id
+                    __('Block Default Values','codoc'),  // title
+                    function() {
+                        global $CODOC_SETTINGS;
+                        echo '<div class="excerpt">' . esc_html(__('You can specify default values for new codoc blocks in JSON format.','codoc')) . '</div>';
+                        echo sprintf('<textarea placeholder=\'{"showPrice":false,"price":300}\' rows="3" cols="50" name="%s[block_defaults]">%s</textarea>',esc_attr(CODOC_SETTINGS_OPTION_NAME),esc_html($CODOC_SETTINGS['block_defaults']));
+                        echo '<p class="description">'
+                            . 'showPrice (bool: true), '
+                            . 'price (int: 500), '
+                            . 'limited (bool: false), '
+                            . 'limitedCount (int: 10), '
+                            . 'affiliateMode (bool: false), '
+                            . 'affiliateRate (string: "0.0500"), '
+                            . 'showSupport (bool: false), '
+                            . 'showPaywalledSupport (bool: false), '
+                            . 'statusLimited (bool: false), '
+                            . 'subscriptions (object: {})'
+                            . '</p>';
+                    },
+                    'codoc',                   //page
+                    'setting_section_id'       //Section
+                );
+
+                add_settings_field(
                     'cretor_info',                   // id
                     __('Creator\'s Information','codoc'),  // title
                     function() {
@@ -802,6 +839,10 @@ final class Codoc {
                     wp_enqueue_script(  'codoc-editor-onload', $path, array('jquery'), '', true );
                     // I just want to insert this global variables but i don't know how i can do it..
                     $auth_info = get_option(CODOC_AUTHINFO_OPTION_NAME);
+                    $codoc_settings = get_option(CODOC_SETTINGS_OPTION_NAME);
+                    $block_defaults_raw = isset($codoc_settings['block_defaults']) ? $codoc_settings['block_defaults'] : '';
+                    $block_defaults_decoded = json_decode($block_defaults_raw, true);
+                    $block_defaults = is_array($block_defaults_decoded) ? $block_defaults_decoded : new stdClass();
                     wp_localize_script(
                         'codoc-editor-onload',
                         'CODOCEDITOR',
@@ -816,6 +857,7 @@ final class Codoc {
                             'codoc_account_is_pro' => isset($auth_info['account_is_pro']) ? $auth_info['account_is_pro'] : 0,
                             'codoc_currency_code'  => isset($auth_info['currency_code']) ? $auth_info['currency_code'] : 0,
                             'codoc_currency_decimal_places'  => isset($auth_info['currency_decimal_places']) ? $auth_info['currency_decimal_places'] : 0,
+                            'codoc_block_defaults' => $block_defaults,
                         )
                     );
 

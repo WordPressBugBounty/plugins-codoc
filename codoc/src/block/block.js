@@ -350,17 +350,19 @@ class EditBlockContent extends Component {
 	constructor() {
 		super( ...arguments );
         // デフォルト値
+        const bd = OPTIONS.codoc_block_defaults || {};
+        const d = (key, fallback) => bd.hasOwnProperty(key) ? bd[key] : fallback;
         this.props.setAttributes({ version: CODOC_PLUGIN_VERSION });
-        this.props.setAttributes({ showPrice: this.props.attributes.showPrice == null ? true : this.props.attributes.showPrice });
-        this.props.setAttributes({ price: this.props.attributes.price == null ? 500 : this.props.attributes.price });
-        this.props.setAttributes({ limited: this.props.attributes.limited == null ? false : this.props.attributes.limited });
-        this.props.setAttributes({ limitedCount: this.props.attributes.limitedCount == null ? 10 : this.props.attributes.limitedCount });
-        this.props.setAttributes({ affiliateMode: this.props.attributes.affiliateMode == null ? false : this.props.attributes.affiliateMode });
-        this.props.setAttributes({ affiliateRate: this.props.attributes.affiliateRate == null ? '0.0500' : this.props.attributes.affiliateRate });
-        this.props.setAttributes({ showSupport: this.props.attributes.showSupport == null ? false : this.props.attributes.showSupport });
-        this.props.setAttributes({ showPaywalledSupport: this.props.attributes.showPaywalledSupport == null ? false : this.props.attributes.showPaywalledSupport });
-        this.props.setAttributes({ statusLimited: this.props.attributes.statusLimited == null ? false : this.props.attributes.statusLimited });        
-        this.props.setAttributes({ subscriptions: this.props.attributes.subscriptions == null ? {} : this.props.attributes.subscriptions });
+        this.props.setAttributes({ showPrice: this.props.attributes.showPrice == null ? d('showPrice', true) : this.props.attributes.showPrice });
+        this.props.setAttributes({ price: this.props.attributes.price == null ? d('price', 500) : this.props.attributes.price });
+        this.props.setAttributes({ limited: this.props.attributes.limited == null ? d('limited', false) : this.props.attributes.limited });
+        this.props.setAttributes({ limitedCount: this.props.attributes.limitedCount == null ? d('limitedCount', 10) : this.props.attributes.limitedCount });
+        this.props.setAttributes({ affiliateMode: this.props.attributes.affiliateMode == null ? d('affiliateMode', false) : this.props.attributes.affiliateMode });
+        this.props.setAttributes({ affiliateRate: this.props.attributes.affiliateRate == null ? d('affiliateRate', '0.0500') : this.props.attributes.affiliateRate });
+        this.props.setAttributes({ showSupport: this.props.attributes.showSupport == null ? d('showSupport', false) : this.props.attributes.showSupport });
+        this.props.setAttributes({ showPaywalledSupport: this.props.attributes.showPaywalledSupport == null ? d('showPaywalledSupport', false) : this.props.attributes.showPaywalledSupport });
+        this.props.setAttributes({ statusLimited: this.props.attributes.statusLimited == null ? d('statusLimited', false) : this.props.attributes.statusLimited });
+        this.props.setAttributes({ subscriptions: this.props.attributes.subscriptions == null ? d('subscriptions', {}) : this.props.attributes.subscriptions });
 
 		this.onChangeInput = this.onChangeInput.bind( this );
 		this.onKeyDown = this.onKeyDown.bind( this );

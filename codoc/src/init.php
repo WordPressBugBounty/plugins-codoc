@@ -36,6 +36,10 @@ function wordpress_cgb_block_editor_assets() { // phpcs:ignore
 	global $_CODOC;
 	$auth_info = get_option(CODOC_AUTHINFO_OPTION_NAME);
 
+	$codoc_settings = get_option(CODOC_SETTINGS_OPTION_NAME);
+	$block_defaults_raw = isset($codoc_settings['block_defaults']) ? $codoc_settings['block_defaults'] : '';
+	$block_defaults_decoded = json_decode($block_defaults_raw, true);
+	$block_defaults = is_array($block_defaults_decoded) ? $block_defaults_decoded : new stdClass();
 	wp_localize_script('codoc-block-js', 'OPTIONS', array(
 		'codoc_url'      => $_CODOC->get_codoc_url(),
 		'codoc_usercode' => get_option(CODOC_USERCODE_OPTION_NAME),
@@ -44,6 +48,7 @@ function wordpress_cgb_block_editor_assets() { // phpcs:ignore
 		'codoc_account_is_pro' => isset($auth_info['account_is_pro']) ? $auth_info['account_is_pro'] : 0,
 		'codoc_currency_code' => isset($auth_info['currency_code']) ? $auth_info['currency_code'] : 'yen',
 		'codoc_currency_decimal_places' => isset($auth_info['currency_decimal_places']) ? $auth_info['currency_decimal_places'] : 0,
+		'codoc_block_defaults' => $block_defaults,
 	));
 
 	// Set script translations
