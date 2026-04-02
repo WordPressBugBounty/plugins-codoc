@@ -34,6 +34,9 @@ final class Codoc {
         
         // 2020-07-25 excerpt対応
         add_filter('excerpt_allowed_blocks',[$this,'excerpt_allowed_blocks']);
+
+        // テーマが allowed_block_types_all で制限している場合に codoc ブロックを許可リストに追加
+        add_filter('allowed_block_types_all', [$this,'allowed_block_types_all'], 100, 2);
         
         $auth_info = get_option(CODOC_AUTHINFO_OPTION_NAME);
 
@@ -1131,6 +1134,18 @@ final class Codoc {
             array_push($allowed_blocks,'codoc/codoc-block');
         }
         return $allowed_blocks;
+    }
+
+    function allowed_block_types_all ($allowed_block_types, $block_editor_context) {
+        // テーマ等がブロックを制限していない場合（true = 全ブロック許可）はそのまま返す
+        if ($allowed_block_types === true) {
+            return $allowed_block_types;
+        }
+        // 配列で制限されている場合、codoc ブロックを追加
+        if (is_array($allowed_block_types) && !in_array('codoc/codoc-block', $allowed_block_types)) {
+            $allowed_block_types[] = 'codoc/codoc-block';
+        }
+        return $allowed_block_types;
     }
 
     function show_tadv_notice() {
