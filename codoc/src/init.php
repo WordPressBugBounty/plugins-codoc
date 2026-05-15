@@ -49,6 +49,13 @@ function wordpress_cgb_block_editor_assets() { // phpcs:ignore
 		'codoc_currency_code' => isset($auth_info['currency_code']) ? $auth_info['currency_code'] : 'yen',
 		'codoc_currency_decimal_places' => isset($auth_info['currency_decimal_places']) ? $auth_info['currency_decimal_places'] : 0,
 		'codoc_block_defaults' => $block_defaults,
+		'codoc_max_lengths' => array(
+			'title'          => CODOC_MAX_TITLE_LENGTH,
+			'body_free'      => CODOC_MAX_BODY_FREE_LENGTH,
+			'body_paywalled' => CODOC_MAX_BODY_PAYWALLED_LENGTH,
+			'body'           => CODOC_MAX_BODY_LENGTH,
+			'binded_url'     => CODOC_MAX_BINDED_URL_LENGTH,
+		),
 	));
 
 	// Set script translations

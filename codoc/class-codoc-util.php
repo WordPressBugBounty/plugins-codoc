@@ -136,6 +136,36 @@ final class CodocUtil {
         $this->setAuthInfo($auth_info);
         return $this->callAPI('GET','/support_entry');
     }
+    // API側と統一した文字数上限のバリデーション。エラーメッセージの配列を返す (エラー無しなら空配列)
+    public function validate_entry_lengths($api_params) {
+        $errors = [];
+        $title          = isset($api_params['title']) ? $api_params['title'] : '';
+        $body_free      = isset($api_params['body_free']) ? $api_params['body_free'] : '';
+        $body_paywalled = isset($api_params['body_paywalled']) ? $api_params['body_paywalled'] : '';
+        $binded_url     = isset($api_params['binded_url']) ? $api_params['binded_url'] : '';
+
+        if (mb_strlen($title) > CODOC_MAX_TITLE_LENGTH) {
+            // Translators: %1$d is the max length, %2$d is the current length.
+            $errors[] = sprintf(__('Title exceeds the maximum length of %1$d characters (current: %2$d).', 'codoc'), CODOC_MAX_TITLE_LENGTH, mb_strlen($title));
+        }
+        $len_body_free      = mb_strlen($body_free);
+        $len_body_paywalled = mb_strlen($body_paywalled);
+        if ($len_body_free > CODOC_MAX_BODY_FREE_LENGTH) {
+            $errors[] = sprintf(__('Free area exceeds the maximum length of %1$d characters (current: %2$d).', 'codoc'), CODOC_MAX_BODY_FREE_LENGTH, $len_body_free);
+        }
+        if ($len_body_paywalled > CODOC_MAX_BODY_PAYWALLED_LENGTH) {
+            $errors[] = sprintf(__('Paid area exceeds the maximum length of %1$d characters (current: %2$d).', 'codoc'), CODOC_MAX_BODY_PAYWALLED_LENGTH, $len_body_paywalled);
+        }
+        $len_body_total = $len_body_free + $len_body_paywalled;
+        if ($len_body_total > CODOC_MAX_BODY_LENGTH) {
+            $errors[] = sprintf(__('Total body exceeds the maximum length of %1$d characters (current: %2$d).', 'codoc'), CODOC_MAX_BODY_LENGTH, $len_body_total);
+        }
+        if (mb_strlen($binded_url) > CODOC_MAX_BINDED_URL_LENGTH) {
+            $errors[] = sprintf(__('URL exceeds the maximum length of %1$d characters (current: %2$d).', 'codoc'), CODOC_MAX_BINDED_URL_LENGTH, mb_strlen($binded_url));
+        }
+        return $errors;
+    }
+
     public function sync_entry($params = [
         "post_title"       => null,
         "post_content"     => null,
@@ -201,6 +231,12 @@ final class CodocUtil {
             'show_paywalled_support'   => isset($codoc_info['showPaywalledSupport']) ? ($codoc_info['showPaywalledSupport'] ? 1 : 0) : 0,
             'subscriptions'  => isset($codoc_info['subscriptions']) ? array_keys($codoc_info['subscriptions']) : [],
         ];
+        // API側と統一した文字数バリデーション
+        $errors = $this->validate_entry_lengths($api_params);
+        if ($errors) {
+            set_transient('codoc_entry_validation_errors', $errors, MINUTE_IN_SECONDS * 5);
+            return null;
+        }
         $entryCode = $params['codoc_entry_code'];
         $res = null;
         if ($entryCode) {

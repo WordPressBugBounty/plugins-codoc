@@ -27,7 +27,10 @@ const {
   CheckboxControl,
   RangeControl,
   TextControl,
+  Notice,
 } = wp.components;
+
+const { withSelect } = wp.data;
 
 const {
 	getDefaultBlockName,
@@ -46,6 +49,102 @@ const CODOC_CURRENCY_DECIMAL_PLACES = OPTIONS.codoc_currency_decimal_places;
 
 //import Cookies from 'universal-cookie';
 //const cookies = new Cookies();
+
+const CODOC_MAX_LENGTHS = OPTIONS.codoc_max_lengths || {};
+
+// codoc ブロックの直前/直後で本文を分割
+function splitCodocContent(content) {
+    const blockRegex = /<!--\s*wp:codoc\/codoc-block[\s\S]*?<!--\s*\/wp:codoc\/codoc-block\s*-->/;
+    const splited = (content || '').split(blockRegex);
+    return {
+        bodyFree:      splited[0] || '',
+        bodyPaywalled: splited.slice(1).join('') || '',
+    };
+}
+
+function buildLengthErrors(title, bodyFree, bodyPaywalled) {
+    const errors = [];
+    const total = bodyFree.length + bodyPaywalled.length;
+    if (CODOC_MAX_LENGTHS.title && title.length > CODOC_MAX_LENGTHS.title) {
+        errors.push(__('Title exceeds the maximum length of', 'codoc') + ' ' + CODOC_MAX_LENGTHS.title + ' (' + title.length + ')');
+    }
+    if (CODOC_MAX_LENGTHS.body_free && bodyFree.length > CODOC_MAX_LENGTHS.body_free) {
+        errors.push(__('Free area exceeds the maximum length of', 'codoc') + ' ' + CODOC_MAX_LENGTHS.body_free + ' (' + bodyFree.length + ')');
+    }
+    if (CODOC_MAX_LENGTHS.body_paywalled && bodyPaywalled.length > CODOC_MAX_LENGTHS.body_paywalled) {
+        errors.push(__('Paid area exceeds the maximum length of', 'codoc') + ' ' + CODOC_MAX_LENGTHS.body_paywalled + ' (' + bodyPaywalled.length + ')');
+    }
+    if (CODOC_MAX_LENGTHS.body && total > CODOC_MAX_LENGTHS.body) {
+        errors.push(__('Total body exceeds the maximum length of', 'codoc') + ' ' + CODOC_MAX_LENGTHS.body + ' (' + total + ')');
+    }
+    return errors;
+}
+
+// codoc ブロック選択時の Inspector サイドバーに警告を表示する
+const CodocLengthNotices = withSelect((select) => {
+    const editor = select('core/editor');
+    return {
+        postTitle:   editor ? editor.getEditedPostAttribute('title')   : '',
+        postContent: editor ? editor.getEditedPostAttribute('content') : '',
+    };
+})(({ postTitle, postContent }) => {
+    const { bodyFree, bodyPaywalled } = splitCodocContent(postContent);
+    const errors = buildLengthErrors(postTitle || '', bodyFree, bodyPaywalled);
+    if (errors.length === 0) {
+        return null;
+    }
+    return (
+        <Notice status="error" isDismissible={ false }>
+            <strong>{ __('codoc length limit exceeded:', 'codoc') }</strong>
+            <ul style={{ marginTop: '0.5em', marginBottom: 0 }}>
+                { errors.map((e, i) => <li key={i}>{ e }</li>) }
+            </ul>
+        </Notice>
+    );
+});
+
+// codoc ブロックを選択していなくても、本文中に存在すればエディタ上部に通知を表示する
+(function() {
+    if (!wp.data || !wp.data.subscribe) {
+        return;
+    }
+    const NOTICE_ID = 'codoc-length-limit';
+    let lastState = '';
+    wp.data.subscribe(function() {
+        const editor = wp.data.select('core/editor');
+        const blockEditor = wp.data.select('core/block-editor') || wp.data.select('core/editor');
+        const noticesDispatch = wp.data.dispatch('core/notices');
+        if (!editor || !blockEditor || !noticesDispatch) {
+            return;
+        }
+        const blocks = blockEditor.getBlocks ? blockEditor.getBlocks() : [];
+        const hasCodocBlock = blocks.some(function(b) { return b && b.name === 'codoc/codoc-block'; });
+        if (!hasCodocBlock) {
+            if (lastState !== '') {
+                noticesDispatch.removeNotice(NOTICE_ID);
+                lastState = '';
+            }
+            return;
+        }
+        const title   = editor.getEditedPostAttribute('title')   || '';
+        const content = editor.getEditedPostAttribute('content') || '';
+        const { bodyFree, bodyPaywalled } = splitCodocContent(content);
+        const errors = buildLengthErrors(title, bodyFree, bodyPaywalled);
+        const state = errors.join('||');
+        if (state === lastState) {
+            return;
+        }
+        lastState = state;
+        noticesDispatch.removeNotice(NOTICE_ID);
+        if (errors.length > 0) {
+            noticesDispatch.createNotice(
+                'error',
+                __('codoc length limit exceeded:', 'codoc') + ' ' + errors.join(' / '),
+                { id: NOTICE_ID, isDismissible: false }
+            );
+        }
+    });
+})();
 
 class CodocControls extends Component {
     constructor( props ) {
@@ -226,6 +325,8 @@ class CodocControls extends Component {
 
         return(
             <InspectorControls key="CodocControls">
+
+            <CodocLengthNotices />
 
             <PanelBody>
 

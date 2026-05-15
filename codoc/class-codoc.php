@@ -46,6 +46,8 @@ final class Codoc {
             add_action( 'added_post_meta',  [$this,'updated_post_meta'], 10, 3 );
             add_action( 'updated_post_meta',[$this,'updated_post_meta'], 10, 3 );
             add_action( 'deleted_post_meta',[$this,'deleted_post_meta'], 10, 4 );
+            // 文字数バリデーションエラーの管理画面通知
+            add_action( 'admin_notices',    [$this,'show_validation_notices'] );
         }
         global $pagenow;
         //管理画面でcodoc認証があり投稿画面の場合
@@ -1011,6 +1013,37 @@ final class Codoc {
         $codoc_settings = get_option(CODOC_SETTINGS_OPTION_NAME);
         $post_content = (isset($codoc_settings['do_not_filter_the_content']) and $codoc_settings['do_not_filter_the_content']) ?
                       $post->post_content : $this->get_filtered_content($post);
+
+        // codoc タグ(span/div または Gutenberg ブロック)が含まれていれば API側と統一した文字数検証を行う
+        $has_codoc_tag = preg_match('/<(?:span|div)[^>]+data-id="codoc-tag"/', $post_content)
+                      || preg_match('/wp:codoc\/codoc-block/', $post_content);
+        if ($has_codoc_tag) {
+            // codoc タグ位置で free / paywalled を分割
+            $gutenberg_split = '/(?:<(?:div|p)(?:[^>]+|)>|)<\!-- +wp:codoc\/codoc-block .*<\!-- +\/wp:codoc\/codoc-block +-->(?:<\/(?:div|p)>|)/s';
+            $tag_split       = '/<(?:span|div)[^>]+data-id="codoc-tag"(?:[^>]+|)>(?:.+|)<\/(?:span|div)>/';
+            $end_tag_regex   = '/<(?:div|p)>::CODOC_WP_END_PAYWALL::<\/(?:div|p)>/';
+            $for_split       = preg_split($end_tag_regex, $post_content);
+            $for_split       = $for_split[0];
+            if (preg_match('/wp:codoc\/codoc-block/', $for_split)) {
+                $splited = preg_split($gutenberg_split, $for_split);
+            } else {
+                $splited = preg_split($tag_split, $for_split);
+            }
+            $body_free      = isset($splited[0]) ? $splited[0] : '';
+            $body_paywalled = isset($splited[1]) ? $splited[1] : '';
+            $errors = $this->util->validate_entry_lengths([
+                'title'          => $post->post_title,
+                'body_free'      => $body_free,
+                'body_paywalled' => $body_paywalled,
+                'binded_url'     => get_permalink($post_ID),
+            ]);
+            if ($errors) {
+                set_transient('codoc_entry_validation_errors', $errors, MINUTE_IN_SECONDS * 5);
+                // 同期はスキップ
+                return true;
+            }
+        }
+
         $res =  $this->util->sync_entry([
             "post_title"       => $post->post_title,
             "post_content"     => $post_content,
@@ -1146,6 +1179,20 @@ final class Codoc {
             $allowed_block_types[] = 'codoc/codoc-block';
         }
         return $allowed_block_types;
+    }
+
+    function show_validation_notices() {
+        $errors = get_transient('codoc_entry_validation_errors');
+        if (!$errors || !is_array($errors)) {
+            return;
+        }
+        delete_transient('codoc_entry_validation_errors');
+        $header = __('codoc could not sync this entry due to length limits:', 'codoc');
+        echo '<div class="notice notice-error is-dismissible"><p><strong>' . esc_html($header) . '</strong></p><ul>';
+        foreach ($errors as $message) {
+            echo '<li>' . esc_html($message) . '</li>';
+        }
+        echo '</ul></div>';
     }
 
     function show_tadv_notice() {
