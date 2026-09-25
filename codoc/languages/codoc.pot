@@ -511,3 +511,27 @@ msgstr ""
 #. Author URI of the plugin/theme
 msgid "https://codoc.jp"
 msgstr ""
+
+#: dist/blocks.build.js:1 src/block/block.js:1
+msgid "Guest purchase"
+msgstr ""
+
+#: dist/blocks.build.js:1 src/block/block.js:1
+msgid "Viewers can purchase without a codoc account."
+msgstr ""
+
+#: dist/blocks.build.js:1 src/block/block.js:1
+msgid "Viewers must log in to codoc to purchase."
+msgstr ""
+
+#: class-codoc.php:1
+msgid "Specified values take precedence over the values last used in the editor."
+msgstr ""
+
+#: class-codoc.php:1
+msgid "Block Default Values"
+msgstr ""
+
+#: class-codoc.php:1
+msgid "You can specify default values for new codoc blocks in JSON format."
+msgstr ""

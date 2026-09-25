@@ -52,6 +52,32 @@ const CODOC_CURRENCY_DECIMAL_PLACES = OPTIONS.codoc_currency_decimal_places;
 
 const CODOC_MAX_LENGTHS = OPTIONS.codoc_max_lengths || {};
 
+// エディタで前回使った設定を localStorage に保存し、新規ブロックの初期値に使う
+// (優先順位: 設定画面の Block Default Values -> 前回値 -> 固定値)
+const CODOC_LAST_USED_KEY = 'codoc_block_last_used';
+const CODOC_LAST_USED_ATTRS = ['showPrice','price','limited','limitedCount','affiliateMode','affiliateRate','showSupport','showPaywalledSupport','showPayWithoutAccountButton','statusLimited','subscriptions'];
+function loadLastUsedAttributes() {
+    try {
+        const parsed = JSON.parse(window.localStorage.getItem(CODOC_LAST_USED_KEY) || 'null');
+        return (parsed && typeof parsed === 'object') ? parsed : {};
+    } catch (e) {
+        return {};
+    }
+}
+function saveLastUsedAttributes(attributes) {
+    try {
+        const saved = {};
+        CODOC_LAST_USED_ATTRS.forEach((key) => {
+            if (attributes[key] !== undefined && attributes[key] !== null) {
+                saved[key] = attributes[key];
+            }
+        });
+        window.localStorage.setItem(CODOC_LAST_USED_KEY, JSON.stringify(saved));
+    } catch (e) {
+        // localStorage が使えない環境では何もしない
+    }
+}
+
 // codoc ブロックの直前/直後で本文を分割
 function splitCodocContent(content) {
     const blockRegex = /<!--\s*wp:codoc\/codoc-block[\s\S]*?<!--\s*\/wp:codoc\/codoc-block\s*-->/;
@@ -233,10 +259,15 @@ class CodocControls extends Component {
 			__( 'Unlisted' ,'codoc') :
 			__( 'Published' ,'codoc');
 	}
+	getShowPayWithoutAccountButtonHelp( checked ) {
+		return checked ?
+			__( 'Viewers can purchase without a codoc account.' ,'codoc') :
+			__( 'Viewers must log in to codoc to purchase.' ,'codoc');
+	}
 
     render() {
         const {
-            setAttributes,
+            setAttributes: setBlockAttributes,
             attributes: {
                 showPrice,
                 price,
@@ -248,10 +279,16 @@ class CodocControls extends Component {
 
                 showSupport,
                 showPaywalledSupport,
+                showPayWithoutAccountButton,
                 statusLimited,
                 subscriptions,
             }
         } = this.props;
+        // 設定変更のたびに前回値として保存
+        const setAttributes = (attrs) => {
+            setBlockAttributes(attrs);
+            saveLastUsedAttributes(Object.assign({}, this.props.attributes, attrs));
+        };
 
         const toggleShowPrice   = () => setAttributes( { showPrice: ! showPrice } );
         const toggleLimited     = () => setAttributes( { limited: ! limited } );
@@ -259,6 +296,7 @@ class CodocControls extends Component {
         const toggleStatusLimited  = () => setAttributes( { statusLimited: ! statusLimited } );
         const toggleAffiliateMode  = () => setAttributes( { affiliateMode: ! affiliateMode } );
         const toggleShowSupport = () => setAttributes( { showSupport: ! showSupport } );
+        const toggleShowPayWithoutAccountButton = () => setAttributes( { showPayWithoutAccountButton: ! showPayWithoutAccountButton } );
 
         const SubscriptionCheckBoxes = withState({
             checked_obj: Object.assign({}, subscriptions)
@@ -408,6 +446,16 @@ class CodocControls extends Component {
 			help={ this.getShowSupportHelp }
 				/>
                 </div>
+
+            <div style={{ display: 'initial' }}>
+			<ToggleControl
+			label={ __( 'Guest purchase', 'codoc') }
+			checked={ !! showPayWithoutAccountButton }
+            value="1"
+			onChange={ toggleShowPayWithoutAccountButton }
+			help={ this.getShowPayWithoutAccountButtonHelp }
+				/>
+                </div>
                 
             <div style={{ display: 'initial' }}>            
 			<ToggleControl
@@ -452,7 +500,8 @@ class EditBlockContent extends Component {
 		super( ...arguments );
         // デフォルト値
         const bd = OPTIONS.codoc_block_defaults || {};
-        const d = (key, fallback) => bd.hasOwnProperty(key) ? bd[key] : fallback;
+        const lu = loadLastUsedAttributes();
+        const d = (key, fallback) => bd.hasOwnProperty(key) ? bd[key] : (lu.hasOwnProperty(key) ? lu[key] : fallback);
         this.props.setAttributes({ version: CODOC_PLUGIN_VERSION });
         this.props.setAttributes({ showPrice: this.props.attributes.showPrice == null ? d('showPrice', true) : this.props.attributes.showPrice });
         this.props.setAttributes({ price: this.props.attributes.price == null ? d('price', 500) : this.props.attributes.price });
@@ -463,6 +512,7 @@ class EditBlockContent extends Component {
         this.props.setAttributes({ showSupport: this.props.attributes.showSupport == null ? d('showSupport', false) : this.props.attributes.showSupport });
         this.props.setAttributes({ showPaywalledSupport: this.props.attributes.showPaywalledSupport == null ? d('showPaywalledSupport', false) : this.props.attributes.showPaywalledSupport });
         this.props.setAttributes({ statusLimited: this.props.attributes.statusLimited == null ? d('statusLimited', false) : this.props.attributes.statusLimited });
+        this.props.setAttributes({ showPayWithoutAccountButton: this.props.attributes.showPayWithoutAccountButton == null ? d('showPayWithoutAccountButton', true) : this.props.attributes.showPayWithoutAccountButton });
         this.props.setAttributes({ subscriptions: this.props.attributes.subscriptions == null ? d('subscriptions', {}) : this.props.attributes.subscriptions });
 
 		this.onChangeInput = this.onChangeInput.bind( this );
@@ -569,6 +619,10 @@ registerBlockType( 'codoc/codoc-block', {
             default: null,
         },
         statusLimited: {
+            type: 'boolean',
+            default: null,
+        },
+        showPayWithoutAccountButton: {
             type: 'boolean',
             default: null,
         },

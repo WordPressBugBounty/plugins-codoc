@@ -231,6 +231,10 @@ final class CodocUtil {
             'show_paywalled_support'   => isset($codoc_info['showPaywalledSupport']) ? ($codoc_info['showPaywalledSupport'] ? 1 : 0) : 0,
             'subscriptions'  => isset($codoc_info['subscriptions']) ? array_keys($codoc_info['subscriptions']) : [],
         ];
+        // ゲスト購入の可否 (未設定 = 旧バージョンのブロックの場合は送信せず本体側の既存値を維持)
+        if (isset($codoc_info['showPayWithoutAccountButton'])) {
+            $api_params['show_pay_without_account_button'] = $codoc_info['showPayWithoutAccountButton'] ? 1 : 0;
+        }
         // API側と統一した文字数バリデーション
         $errors = $this->validate_entry_lengths($api_params);
         if ($errors) {

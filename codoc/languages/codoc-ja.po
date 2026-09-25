@@ -533,6 +533,30 @@ msgstr "codoc.jp"
 msgid "https://codoc.jp"
 msgstr "https://codoc.jp"
 
+#: dist/blocks.build.js:1 src/block/block.js:1
+msgid "Guest purchase"
+msgstr "ゲスト購入"
+
+#: dist/blocks.build.js:1 src/block/block.js:1
+msgid "Viewers can purchase without a codoc account."
+msgstr "codocアカウントが無くても購入できます。"
+
+#: dist/blocks.build.js:1 src/block/block.js:1
+msgid "Viewers must log in to codoc to purchase."
+msgstr "購入にはcodocへのログインが必要です。"
+
+#: class-codoc.php:1
+msgid "Specified values take precedence over the values last used in the editor."
+msgstr "指定した項目は、エディタで前回使用した値より優先されます。"
+
+#: class-codoc.php:1
+msgid "Block Default Values"
+msgstr "ブロックの既定値"
+
+#: class-codoc.php:1
+msgid "You can specify default values for new codoc blocks in JSON format."
+msgstr "新規codocブロックの既定値をJSON形式で指定できます。"
+
 #~ msgid "Subscriptions"
 #~ msgstr "サブスクリプション"
 

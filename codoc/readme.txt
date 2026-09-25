@@ -4,7 +4,7 @@ Donate link: https://codoc.jp
 Tags: paywall, subscription, membership, tipping, digital downloads
 Requires at least: 4.6
 Tested up to: 6.8.2
-Stable tag: 0.9.60
+Stable tag: 0.9.61
 Requires PHP: 5.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -155,6 +155,11 @@ Increase the value if needed.
 10. Mobile view of the Paywall and purchase interface.
 
 == Changelog ==
+
+= 0.9.61 =
+
+* Added a per-article "Guest purchase" setting to the codoc block (Gutenberg and Classic Editor). When disabled, purchases require a codoc account.
+* New codoc blocks now start with the settings last used in the editor (stored in the browser). "Block Default Values" in the settings screen take precedence.
 
 = 0.9.51 =
 

@@ -615,7 +615,7 @@ final class Codoc {
                     __('Block Default Values','codoc'),  // title
                     function() {
                         global $CODOC_SETTINGS;
-                        echo '<div class="excerpt">' . esc_html(__('You can specify default values for new codoc blocks in JSON format.','codoc')) . '</div>';
+                        echo '<div class="excerpt">' . esc_html(__('You can specify default values for new codoc blocks in JSON format.','codoc')) . ' ' . esc_html(__('Specified values take precedence over the values last used in the editor.','codoc')) . '</div>';
                         echo sprintf('<textarea placeholder=\'{"showPrice":false,"price":300}\' rows="3" cols="50" name="%s[block_defaults]">%s</textarea>',esc_attr(CODOC_SETTINGS_OPTION_NAME),esc_html($CODOC_SETTINGS['block_defaults']));
                         echo '<p class="description">'
                             . 'showPrice (bool: true), '
@@ -626,6 +626,7 @@ final class Codoc {
                             . 'affiliateRate (string: "0.0500"), '
                             . 'showSupport (bool: false), '
                             . 'showPaywalledSupport (bool: false), '
+                            . 'showPayWithoutAccountButton (bool: true), '
                             . 'statusLimited (bool: false), '
                             . 'subscriptions (object: {})'
                             . '</p>';
