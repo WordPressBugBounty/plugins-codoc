@@ -4,7 +4,7 @@ Donate link: https://codoc.jp
 Tags: paywall, subscription, membership, tipping, digital downloads
 Requires at least: 4.6
 Tested up to: 6.8.2
-Stable tag: 0.9.61
+Stable tag: 0.9.62
 Requires PHP: 5.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -155,6 +155,10 @@ Increase the value if needed.
 10. Mobile view of the Paywall and purchase interface.
 
 == Changelog ==
+
+= 0.9.62 =
+
+* Fixed the codoc block failing with "This block has encountered an error and cannot be previewed." on editors running React 19 (Gutenberg plugin 24.2.0 and later). Removed a legacy string ref and migrated from deprecated wp.editor / withState APIs.
 
 = 0.9.61 =
 

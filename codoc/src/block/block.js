@@ -15,10 +15,11 @@ const { __ } = wp.i18n; // Import __() from wp.i18n
 const { Component } = wp.element;
 
 const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.blocks
+// WordPress 5.3 以降は wp.blockEditor、それ以前は wp.editor から取得
 const {
   InspectorControls,
   RichText
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 
 const {
   SelectControl,
@@ -36,8 +37,6 @@ const {
 	getDefaultBlockName,
 	createBlock,
 } = wp.blocks;
-
-const { withState } = wp.compose;
 
 const CODOC_URL = OPTIONS.codoc_url;
 const CODOC_USER_CODE = OPTIONS.codoc_usercode;
@@ -172,6 +171,54 @@ const CodocLengthNotices = withSelect((select) => {
     });
 })();
 
+// 読者プランのチェックボックス一覧 (選択状態はブロック属性 subscriptions をそのまま使う)
+function SubscriptionCheckBoxes( { subscriptions, items, searchTerm, onChange } ) {
+    const checked_obj = subscriptions || {};
+    const checkedCount = Object.keys(checked_obj).length;
+    return (
+        <div>
+        {items.length === 0 ? (
+            <p style={{ fontStyle: 'italic', color: '#666' }}>
+                { searchTerm
+                    ? __('No plans found matching your search.','codoc')
+                    : __('No reader plans available.','codoc')
+                }
+            </p>
+        ) : (
+        <ul>
+        {
+            items.map((v) => (
+                <li key={v.value}>
+                <CheckboxControl
+                className="check_items"
+                label={v.label}
+                checked={ !! checked_obj[v.value] }
+                onChange={(check) => {
+                    // 追加する場合、5個以上は無効
+                    if (check && checkedCount >= 5) {
+                        return; // これ以上チェックできない
+                    }
+
+                    const newChecked = { ...checked_obj };
+
+                    if (check) {
+                        newChecked[v.value] = true;
+                    } else {
+                        delete newChecked[v.value];
+                    }
+
+                    onChange(newChecked);
+                }}
+                />
+                </li>
+            ))
+        }
+        </ul>
+        )}
+        </div>
+    );
+}
+
 class CodocControls extends Component {
     constructor( props ) {
         super( ...arguments );
@@ -298,56 +345,6 @@ class CodocControls extends Component {
         const toggleShowSupport = () => setAttributes( { showSupport: ! showSupport } );
         const toggleShowPayWithoutAccountButton = () => setAttributes( { showPayWithoutAccountButton: ! showPayWithoutAccountButton } );
 
-        const SubscriptionCheckBoxes = withState({
-            checked_obj: Object.assign({}, subscriptions)
-        })( ({ checked_obj, setState }) => (
-            <div>
-            {this.state.filteredSubscriptions.length === 0 ? (
-                <p style={{ fontStyle: 'italic', color: '#666' }}>
-                    { this.state.searchTerm
-                        ? __('No plans found matching your search.','codoc')
-                        : __('No reader plans available.','codoc')
-                    }
-                </p>
-            ) : (
-            <ul>
-            {
-                this.state.filteredSubscriptions.map((v) => {
-                    const isChecked = !!checked_obj[v.value];
-                    const checkedCount = Object.keys(checked_obj).length;
-
-                    return (
-                        <li key={v.value}>
-                        <CheckboxControl
-                        className="check_items"
-                        label={v.label}
-                        checked={isChecked}
-                        onChange={(check) => {
-                            // 追加する場合、5個以上は無効
-                            if (check && checkedCount >= 5) {
-                                return; // これ以上チェックできない
-                            }
-
-                            const newChecked = { ...checked_obj };
-
-                            if (check) {
-                                newChecked[v.value] = true;
-                            } else {
-                                delete newChecked[v.value];
-                            }
-
-                            setAttributes({ subscriptions: newChecked });
-                            setState({ checked_obj: newChecked });
-                        }}
-                        />
-                        </li>
-                    );
-                })
-            }
-            </ul>
-            )}
-            </div>
-        ) )
         const affiliateRateOptions = [
             { value: '0.0500', label:'5%' },
             { value: '0.1000', label:'10%' },
@@ -372,7 +369,6 @@ class CodocControls extends Component {
 			label={ __( 'individual sale','codoc' ) }
 			checked={ !! showPrice }
             help={ this.getShowPriceHelp }
-            ref="showPrice"
             onChange={ toggleShowPrice }
 			/>
 
@@ -467,13 +463,13 @@ class CodocControls extends Component {
 				/>
             </div>
                 
-          <div class="codoc-subscription-title">
+          <div className="codoc-subscription-title">
             <label>
             { __('Reader Plans','codoc') }
             </label>
             <a
             href={ CODOC_URL + '/me/subscriptions'}
-            target="_blank" class="codoc-subscription-add"
+            target="_blank" rel="noopener noreferrer" className="codoc-subscription-add"
             >
             { __('Add','codoc') }
             </a>
@@ -486,7 +482,12 @@ class CodocControls extends Component {
                 placeholder={ __('Enter title to search...','codoc') }
             />
 
-            <SubscriptionCheckBoxes />
+            <SubscriptionCheckBoxes
+                subscriptions={ subscriptions }
+                items={ this.state.filteredSubscriptions }
+                searchTerm={ this.state.searchTerm }
+                onChange={ ( newChecked ) => setAttributes( { subscriptions: newChecked } ) }
+            />
 
 
             </PanelBody>

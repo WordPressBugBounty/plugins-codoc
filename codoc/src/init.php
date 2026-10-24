@@ -24,10 +24,15 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function wordpress_cgb_block_editor_assets() { // phpcs:ignore
 	// Scripts and styles for editor only
+	$deps = array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-editor', 'wp-components', 'wp-data', 'wp-keycodes' );
+	// WordPress 5.3 以降は InspectorControls / RichText を wp.blockEditor から取得する
+	if ( wp_script_is( 'wp-block-editor', 'registered' ) ) {
+		$deps[] = 'wp-block-editor';
+	}
 	wp_enqueue_script(
 		'codoc-block-js', // Handle.
 		plugins_url( '/dist/blocks.build.js?ver='  . CODOC_PLUGIN_VERSION, dirname( __FILE__ ) ), // Block.build.js: We register the block here. Built with Webpack.
-		array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-editor' ), // Dependencies, defined above.
+		$deps, // Dependencies, defined above.
 		null, // filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.build.js' ), // Version: filemtime — Gets file modification time.
 		true // Enqueue the script in the footer.
 	);
